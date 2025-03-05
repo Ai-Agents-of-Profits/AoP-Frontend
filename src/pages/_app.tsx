@@ -28,7 +28,7 @@ const outfit = Outfit({
 });
 
 // Configure wallet connectors with explicit support for mobile
-const projectId = process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID;
+const projectId = "5ca6f6800297463475705d4ec56b0244"; // Hardcoded fallback for Vercel build
 
 // Make an array of wallet connectors
 const wallets = [
