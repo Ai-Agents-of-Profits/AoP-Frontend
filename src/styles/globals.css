@@ -1,0 +1,481 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 224 71% 4%;
+    --foreground: 213 31% 91%;
+
+    --muted: 223 47% 11%;
+    --muted-foreground: 215.4 16.3% 56.9%;
+
+    --accent: 216 34% 17%;
+    --accent-foreground: 210 40% 98%;
+
+    --popover: 224 71% 4%;
+    --popover-foreground: 215 20.2% 65.1%;
+
+    --border: 216 34% 17%;
+    --input: 216 34% 17%;
+
+    --card: 224 71% 4%;
+    --card-foreground: 213 31% 91%;
+
+    --primary: 263 90% 51%;
+    --primary-foreground: 222.2 47.4% 1.2%;
+
+    --secondary: 222.2 47.4% 11.2%;
+    --secondary-foreground: 210 40% 98%;
+
+    --destructive: 0 63% 31%;
+    --destructive-foreground: 210 40% 98%;
+
+    --ring: 216 34% 17%;
+
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+    --primary: 217.2 91.2% 59.8%;
+    --primary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 224.3 76.3% 48%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  
+  /* Increase base font size */
+  html {
+    font-size: 18px;
+    font-feature-settings: "ss01", "ss02", "cv01", "cv02";
+  }
+  
+  body {
+    @apply bg-background text-foreground;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+  
+  /* Font family customization */
+  .font-rajdhani {
+    font-family: var(--font-rajdhani), system-ui, sans-serif;
+    letter-spacing: 0.02em;
+  }
+  
+  .font-mono {
+    font-family: var(--font-jetbrains), monospace;
+    letter-spacing: -0.02em;
+  }
+  
+  /* Override heading styles with tech-inspired look */
+  h1 {
+    @apply font-rajdhani font-semibold tracking-wide text-3xl sm:text-4xl;
+  }
+  
+  h2 {
+    @apply font-rajdhani font-semibold tracking-wide text-2xl sm:text-3xl;
+  }
+  
+  h3 {
+    @apply font-rajdhani font-semibold tracking-wide text-xl sm:text-2xl;
+  }
+  
+  h4, h5, h6 {
+    @apply font-rajdhani font-semibold tracking-wide text-lg sm:text-xl;
+  }
+  
+  /* Increase default paragraph size */
+  p {
+    @apply text-base sm:text-lg;
+  }
+  
+  /* Add a subtle tech-inspired text effect for headings */
+  h1, h2 {
+    text-shadow: 0 0 1px rgba(139, 92, 246, 0.5);
+  }
+  
+  /* Better readability for form elements */
+  input, select, textarea, button {
+    @apply text-base sm:text-lg;
+  }
+}
+
+/* Custom typography styles for premium fonts */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-space-grotesk);
+  letter-spacing: -0.02em;
+}
+
+h1 {
+  font-weight: 700;
+}
+
+h2, h3 {
+  font-weight: 600;
+}
+
+/* Enhanced gradient text effect */
+.text-gradient {
+  background: linear-gradient(90deg, #8B5CF6, #D946EF, #9333EA);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  background-size: 200% auto;
+  animation: textShine 6s ease infinite;
+}
+
+@keyframes textShine {
+  0% {
+    background-position: 0% center;
+  }
+  50% {
+    background-position: 100% center;
+  }
+  100% {
+    background-position: 0% center;
+  }
+}
+
+/* Button text */
+.btn, 
+button {
+  font-family: var(--font-space-grotesk);
+  font-weight: 500;
+  letter-spacing: 0.01em;
+}
+
+/* Body text */
+body {
+  font-family: var(--font-outfit);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+}
+
+/* Code blocks */
+code, pre {
+  font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+}
+
+/* Tech-inspired UI elements */
+@layer components {
+  /* Glowing purple border effect */
+  .border-glow {
+    box-shadow: 0 0 5px 1px rgba(139, 92, 246, 0.3);
+    transition: box-shadow 0.3s ease;
+  }
+  
+  .border-glow:hover {
+    box-shadow: 0 0 8px 2px rgba(139, 92, 246, 0.5);
+  }
+  
+  /* Code-like text blocks */
+  .code-text {
+    @apply font-mono bg-black/50 text-purple-300 rounded px-1.5 py-0.5 text-base;
+    border: 1px solid rgba(139, 92, 246, 0.3);
+  }
+  
+  /* Data display style for numbers/metrics */
+  .data-display {
+    @apply font-mono text-purple-300 tracking-wide text-lg sm:text-xl;
+    font-variant-numeric: tabular-nums;
+  }
+  
+  /* Style for labels and small UI text */
+  .ui-label {
+    @apply text-sm sm:text-base uppercase tracking-wider font-medium text-gray-400;
+  }
+  
+  /* Style for values in the UI */
+  .ui-value {
+    @apply text-base sm:text-lg font-medium;
+  }
+}
+
+/* Candlestick Styles */
+.candlestick-column {
+  position: absolute;
+  width: 2vw;
+  max-width: 40px;
+  min-width: 15px;
+  will-change: transform;
+  backface-visibility: hidden;
+  transform: translateZ(0);
+}
+
+.candlestick-1 {
+  position: absolute;
+  width: 100%;
+  height: 80px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-image: url("data:image/svg+xml,%3Csvg width='12' height='80' viewBox='0 0 12 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M6 0V15M6 65V80M1 15H11V65H1V15Z' stroke='rgb(139, 92, 246)' stroke-width='2' fill='rgba(139, 92, 246, 0.3)'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-size: contain;
+  filter: drop-shadow(0 0 3px rgba(139, 92, 246, 0.5));
+  animation: purple-glow 3s ease-in-out infinite alternate;
+}
+
+.candlestick-2 {
+  position: absolute;
+  width: 100%;
+  height: 60px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-image: url("data:image/svg+xml,%3Csvg width='12' height='60' viewBox='0 0 12 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M6 0V10M6 50V60M1 10H11V50H1V10Z' stroke='rgb(74, 222, 128)' stroke-width='2' fill='rgba(74, 222, 128, 0.3)'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-size: contain;
+  filter: drop-shadow(0 0 3px rgba(74, 222, 128, 0.5));
+  animation: green-glow 4s ease-in-out infinite alternate;
+  animation-delay: 0.5s;
+}
+
+.candlestick-3 {
+  position: absolute;
+  width: 100%;
+  height: 100px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-image: url("data:image/svg+xml,%3Csvg width='12' height='100' viewBox='0 0 12 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M6 0V20M6 80V100M1 20H11V80H1V20Z' stroke='rgb(236, 72, 153)' stroke-width='2' fill='rgba(236, 72, 153, 0.3)'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-size: contain;
+  filter: drop-shadow(0 0 3px rgba(236, 72, 153, 0.5));
+  animation: pink-glow 3.5s ease-in-out infinite alternate;
+  animation-delay: 1s;
+}
+
+.candlestick-4 {
+  position: absolute;
+  width: 100%;
+  height: 70px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-image: url("data:image/svg+xml,%3Csvg width='12' height='70' viewBox='0 0 12 70' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M6 0V15M6 55V70M1 15H11V55H1V15Z' stroke='rgb(251, 113, 133)' stroke-width='2' fill='rgba(251, 113, 133, 0.3)'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-size: contain;
+  filter: drop-shadow(0 0 3px rgba(251, 113, 133, 0.5));
+  animation: fuchsia-glow 4.5s ease-in-out infinite alternate;
+  animation-delay: 1.5s;
+}
+
+/* Performance optimization for animations */
+.candlestick-column {
+  will-change: transform;
+  backface-visibility: hidden;
+  transform: translateZ(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .candlestick-column {
+    animation-duration: 60s !important;
+  }
+}
+
+/* Responsive candlestick adjustments */
+@media (max-width: 640px) {
+  .candlestick-column {
+    opacity: 0.2 !important;
+    width: 3vw !important;
+    min-width: 10px !important;
+  }
+  
+  .candlestick-1, .candlestick-2, .candlestick-3, .candlestick-4 {
+    transform: translateX(-50%) scale(0.8);
+  }
+}
+
+/* Small mobile screens */
+@media (max-width: 390px) {
+  .candlestick-column {
+    width: 4vw !important;
+  }
+  
+  .candlestick-1, .candlestick-2, .candlestick-3, .candlestick-4 {
+    transform: translateX(-50%) scale(0.7);
+  }
+}
+
+/* Adjust spacing for mobile views */
+@media (max-width: 768px) {
+  /* Apply specific positioning for certain candlestick columns */
+  .candlestick-column:nth-child(2n) {
+    left: 15% !important;
+  }
+  
+  .candlestick-column:nth-child(3n) {
+    left: 30% !important;
+  }
+  
+  .candlestick-column:nth-child(5n) {
+    left: 60% !important;
+  }
+  
+  .candlestick-column:nth-child(7n) {
+    left: 85% !important;
+  }
+}
+
+/* Mobile specific adjustments */
+@media (max-width: 640px) {
+  /* Reduce animation count on mobile to improve performance */
+  .candlestick-column {
+    animation-duration: 30s !important;
+  }
+}
+
+/* Candlestick Fall Animation */
+@keyframes candlestick-fall {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(100vh); }
+}
+
+/* Individual candlestick glow animations */
+@keyframes purple-glow {
+  0% { 
+    filter: drop-shadow(0 0 3px rgba(139, 92, 246, 0.5)); 
+  }
+  100% { 
+    filter: drop-shadow(0 0 8px rgba(139, 92, 246, 0.8)); 
+  }
+}
+
+@keyframes green-glow {
+  0% { 
+    filter: drop-shadow(0 0 3px rgba(74, 222, 128, 0.5)); 
+  }
+  100% { 
+    filter: drop-shadow(0 0 8px rgba(74, 222, 128, 0.8)); 
+  }
+}
+
+@keyframes pink-glow {
+  0% { 
+    filter: drop-shadow(0 0 3px rgba(236, 72, 153, 0.5)); 
+  }
+  100% { 
+    filter: drop-shadow(0 0 8px rgba(236, 72, 153, 0.8)); 
+  }
+}
+
+@keyframes fuchsia-glow {
+  0% { 
+    filter: drop-shadow(0 0 3px rgba(251, 113, 133, 0.5)); 
+  }
+  100% { 
+    filter: drop-shadow(0 0 8px rgba(251, 113, 133, 0.8)); 
+  }
+}
+
+.crypto-grid {
+  background-image: radial-gradient(circle at 1px 1px, rgba(139, 92, 246, 0.15) 1px, transparent 0);
+  background-size: 40px 40px;
+}
+
+.neural-glow {
+  background: radial-gradient(circle at 50% 50%, rgba(139, 92, 246, 0.3), transparent 50%);
+}
+
+.circuit-pattern {
+  background-image: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 20h40M20 0v40' stroke='rgb(139, 92, 246)' stroke-width='1' fill='none' opacity='0.2'/%3E%3C/svg%3E");
+  background-size: 40px 40px;
+}
+
+.binary-rain {
+  position: absolute;
+  top: -100%;
+  color: rgba(139, 92, 246, 0.1);
+  font-family: monospace;
+  white-space: nowrap;
+  user-select: none;
+  text-shadow: 0 0 5px rgba(139, 92, 246, 0.5);
+}
+
+@keyframes float {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(100vh); }
+}
+
+@keyframes float-1 {
+  0%, 100% { transform: translate(0, 0); }
+  50% { transform: translate(10px, -10px); }
+}
+
+@keyframes float-2 {
+  0%, 100% { transform: translate(0, 0); }
+  50% { transform: translate(-15px, -15px); }
+}
+
+@keyframes float-3 {
+  0%, 100% { transform: translate(0, 0); }
+  50% { transform: translate(15px, -20px); }
+}
+
+@keyframes float-4 {
+  0%, 100% { transform: translate(0, 0); }
+  50% { transform: translate(-20px, -10px); }
+}
+
+@keyframes float-5 {
+  0%, 100% { transform: translate(0, 0); }
+  50% { transform: translate(20px, -15px); }
+}
+
+.floating-element {
+  animation-duration: 6s;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+}
+
+@keyframes border-glow {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+.animate-border-glow {
+  animation: border-glow 4s linear infinite;
+}
+
+.animate-pulse-slow {
+  animation: pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+.glass-effect {
+  backdrop-filter: blur(16px) saturate(180%);
+  background-color: rgba(17, 25, 40, 0.75);
+}
+
+.glass-panel {
+  background: rgba(17, 24, 39, 0.7);
+  backdrop-filter: blur(10px);
+}
+
+.noise {
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  opacity: 0.05;
+}
+
+.text-gradient {
+  @apply bg-clip-text text-transparent bg-gradient-to-r from-purple-400 via-fuchsia-500 to-purple-600;
+}
