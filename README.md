@@ -1,6 +1,6 @@
 # Agent of Profits Frontend
 
-A modern, responsive Web3 investment dashboard built on the Monad Testnet blockchain. This platform enables users to interact with AI-powered investment vaults through an elegant, user-friendly interface.
+Autonomous Ai agents navigate the ecosystem to generate profits
 
 ![Agent of Profits](./src/assets/images/aoplogo.png)
 
