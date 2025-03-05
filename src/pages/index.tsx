@@ -2,7 +2,7 @@
 import { ConnectButton } from '@rainbow-me/rainbowkit';
 import { useRouter } from 'next/router';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowRightIcon, ChartBarIcon, ShieldCheckIcon, CurrencyDollarIcon, ChartPieIcon, UsersIcon, ArrowTrendingUpIcon, ClockIcon, UserGroupIcon } from '@heroicons/react/24/outline';
+import { ArrowRightIcon, ChartBarIcon, ShieldCheckIcon, CurrencyDollarIcon, ChartPieIcon, UsersIcon, ArrowTrendingUpIcon, ClockIcon, UserGroupIcon, BanknotesIcon, ArrowUpRightIcon } from '@heroicons/react/24/outline';
 import { useAccount, useReadContract } from 'wagmi';
 import { formatEther, formatUnits } from 'viem';
 import { MON, USDT } from '../config/tokens';
@@ -445,31 +445,31 @@ export default function Home() {
                 whileHover={{ scale: 1.05, boxShadow: "0 10px 25px -5px rgba(168, 85, 247, 0.4)" }}
                 whileTap={{ scale: 0.95 }}
                 onClick={() => router.push('/deposit')}
-                className="w-full sm:w-auto px-6 sm:px-8 py-3.5 sm:py-4 rounded-xl bg-gradient-to-r from-purple-600 to-pink-600 text-white font-semibold shadow-lg shadow-purple-500/25 hover:shadow-purple-500/40 transition-all duration-300 relative overflow-hidden group"
+                className="w-full sm:w-auto px-6 sm:px-8 py-3.5 sm:py-4 rounded-xl bg-gradient-to-r from-purple-600 to-pink-600 text-white font-semibold shadow-lg shadow-purple-500/25 hover:shadow-purple-500/40 transition-all duration-300 relative overflow-hidden group flex items-center justify-center"
               >
                 <motion.span 
                   className="absolute inset-0 bg-gradient-to-r from-purple-600/0 via-white/20 to-purple-600/0 -translate-x-full group-hover:translate-x-full transition-transform duration-1000"
                   animate={{ x: ["-100%", "100%"] }}
                   transition={{ duration: 2, repeat: Infinity, repeatType: "loop", repeatDelay: 1 }}
                 />
-                Deposit Now
-                <span className="ml-2">→</span>
+                <span>Deposit Now</span>
+                <BanknotesIcon className="ml-2 h-5 w-5" />
               </motion.button>
               
               <motion.button
                 whileHover={{ scale: 1.05, backgroundColor: "rgba(168, 85, 247, 0.15)" }}
                 whileTap={{ scale: 0.95 }}
                 onClick={() => router.push('/docs')}
-                className="w-full sm:w-auto px-6 sm:px-8 py-3.5 sm:py-4 rounded-xl border border-purple-500/30 text-purple-300 hover:text-purple-200 backdrop-blur-sm transition-all duration-300 relative overflow-hidden text-base sm:text-lg"
+                className="w-full sm:w-auto px-6 sm:px-8 py-3.5 sm:py-4 rounded-xl border border-purple-500/30 text-purple-300 hover:text-purple-200 backdrop-blur-sm transition-all duration-300 relative overflow-hidden text-base sm:text-lg flex items-center justify-center"
               >
-                Learn More
-                <motion.span 
-                  className="inline-block ml-2"
-                  animate={{ x: [0, 5, 0] }}
-                  transition={{ duration: 1, repeat: Infinity, repeatType: "reverse", delay: 1 }}
+                <span>Learn More</span>
+                <motion.div
+                  className="ml-2"
+                  animate={{ y: [0, -3, 0], x: [0, 3, 0] }}
+                  transition={{ duration: 1.5, repeat: Infinity, repeatType: "reverse" }}
                 >
-                  ↗
-                </motion.span>
+                  <ArrowUpRightIcon className="h-5 w-5" />
+                </motion.div>
               </motion.button>
             </motion.div>
           </div>
