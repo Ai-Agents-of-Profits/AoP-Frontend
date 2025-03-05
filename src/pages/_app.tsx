@@ -1,9 +1,7 @@
 //@ts-nocheck
 import '@rainbow-me/rainbowkit/styles.css';
-import { RainbowKitProvider, darkTheme } from '@rainbow-me/rainbowkit';
-import { metaMaskWallet, injectedWallet, rainbowWallet, walletConnectWallet } from '@rainbow-me/rainbowkit/wallets';
+import { RainbowKitProvider, darkTheme, getDefaultConfig } from '@rainbow-me/rainbowkit';
 import { createConfig, WagmiProvider } from 'wagmi';
-// import { bsc } from 'wagmi/chains';
 import type { AppProps } from 'next/app';
 import { Space_Grotesk, Outfit } from 'next/font/google';
 import '../styles/globals.css';
@@ -27,16 +25,15 @@ const outfit = Outfit({
   weight: ['400', '500', '600', '700'],
 });
 
-// Configure wallet connectors with explicit support for mobile
-const projectId = "5ca6f6800297463475705d4ec56b0244"; // Hardcoded fallback for Vercel build
+// This is the simplest and most reliable way to configure wallets for both mobile and desktop
+const projectId = "5ca6f6800297463475705d4ec56b0244";
 
-// Make an array of wallet connectors
-const wallets = [
-  metaMaskWallet({ projectId }),
-  injectedWallet(),
-  rainbowWallet({ projectId }),
-  walletConnectWallet({ projectId }),
-];
+const config = getDefaultConfig({
+  appName: 'Agent of Profits',
+  projectId: projectId,
+  chains: [monadTestnet],
+  transports: transportsObject,
+});
 
 // Custom RainbowKit theme
 const customDarkTheme = darkTheme({
@@ -64,19 +61,13 @@ const customDarkTheme = darkTheme({
   },
 });
 
-const config = createConfig({
-  chains: [monadTestnet],
-  syncConnectedChain: true,
-  transports: transportsObject,
-});
-
 const queryClient = new QueryClient();
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
     <WagmiProvider config={config}>
       <QueryClientProvider client={queryClient}>
-        <RainbowKitProvider chains={[monadTestnet]} wallets={wallets} theme={customDarkTheme} modalSize="compact">
+        <RainbowKitProvider theme={customDarkTheme} modalSize="compact">
           <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
             <div className={`${spaceGrotesk.variable} ${outfit.variable} font-sans min-h-screen bg-black dark:bg-black text-gray-200 dark:text-gray-200 transition-colors duration-200`}>
               <Component {...pageProps} />
