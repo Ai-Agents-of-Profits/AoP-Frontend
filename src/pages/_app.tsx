@@ -1,6 +1,7 @@
 //@ts-nocheck
 import '@rainbow-me/rainbowkit/styles.css';
-import { getDefaultWallets, RainbowKitProvider, darkTheme } from '@rainbow-me/rainbowkit';
+import { RainbowKitProvider, darkTheme } from '@rainbow-me/rainbowkit';
+import { metaMaskWallet, injectedWallet, rainbowWallet, walletConnectWallet } from '@rainbow-me/rainbowkit/wallets';
 import { createConfig, WagmiProvider } from 'wagmi';
 // import { bsc } from 'wagmi/chains';
 import type { AppProps } from 'next/app';
@@ -26,7 +27,16 @@ const outfit = Outfit({
   weight: ['400', '500', '600', '700'],
 });
 
-const { wallets } = getDefaultWallets();
+// Configure wallet connectors with explicit support for mobile
+const projectId = process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID;
+
+// Make an array of wallet connectors
+const wallets = [
+  metaMaskWallet({ projectId }),
+  injectedWallet(),
+  rainbowWallet({ projectId }),
+  walletConnectWallet({ projectId }),
+];
 
 // Custom RainbowKit theme
 const customDarkTheme = darkTheme({
