@@ -459,7 +459,7 @@ export default function Home() {
               <motion.button
                 whileHover={{ scale: 1.05, backgroundColor: "rgba(168, 85, 247, 0.15)" }}
                 whileTap={{ scale: 0.95 }}
-                onClick={() => router.push('/docs')}
+                onClick={() => router.push('/agents')}
                 className="w-full sm:w-auto px-6 sm:px-8 py-3.5 sm:py-4 rounded-xl border border-purple-500/30 text-purple-300 hover:text-purple-200 backdrop-blur-sm transition-all duration-300 relative overflow-hidden text-base sm:text-lg flex items-center justify-center"
               >
                 <span>Learn More</span>
