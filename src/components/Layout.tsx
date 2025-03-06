@@ -33,6 +33,7 @@ const Layout: FC<LayoutProps> = ({ children }) => {
     { path: '/dashboard', label: 'Dashboard' },
     { path: '/deposit', label: 'Deposit' },
     { path: '/withdraw', label: 'Withdraw' },
+    { path: '/agents', label: 'Agents' },
   ];
 
   const NavLink = ({ path, label }: { path: string; label: string }) => (
