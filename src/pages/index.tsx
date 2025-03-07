@@ -7,7 +7,7 @@ import { useAccount, useReadContract } from 'wagmi';
 import { formatEther, formatUnits } from 'viem';
 import { MON, USDT } from '../config/tokens';
 import { FACTORY_VAULT_ADDRESS, AoP1_VAULT_ADDRESS, AoP2_VAULT_ADDRESS } from '../config/contracts';
-import { TRADING_VAULT_ABI, FACTORY_VAULT_ABI } from '../config/abis';
+import { FACTORY_VAULT_ABI, AoP1_VAULT_ABI } from '../config/abis';
 import Head from 'next/head';
 import Layout from '../components/Layout';
 import { useEffect, useState } from 'react';
@@ -58,12 +58,25 @@ export default function Home() {
     enabled: mounted,
   });
 
+  // Get MON/USD price
+  const { data: monUsdPrice, isLoading: isMonPriceLoading } = useReadContract({
+    address: AoP1_VAULT_ADDRESS,
+    abi: AoP1_VAULT_ABI,
+    functionName: 'getMonUsdPrice',
+    enabled: mounted,
+  });
+  
+  // Convert MON price from int128 to a usable format (assuming 18 decimals precision)
+  const monPriceInUsd = monUsdPrice ? parseFloat(formatUnits(monUsdPrice, 18)) : 0;
+
   const aop1Stats = aop1VaultStats ? {
     totalAssets: aop1VaultStats[0] ? formatUnits(aop1VaultStats[0], 6) : '0', // in USDT
     totalShares: aop1VaultStats[2] ? formatUnits(aop1VaultStats[2], 18) : '0',
     monBalance: aop1VaultStats[3] ? formatUnits(aop1VaultStats[3], 18) : '0',
     usdtBalance: aop1VaultStats[4] ? formatUnits(aop1VaultStats[4], 6) : '0',
     userCount: aop1VaultStats[6] ? Number(aop1VaultStats[6]) : 0,
+    // Calculate MON value in USD
+    monValueInUsd: aop1VaultStats[3] ? parseFloat(formatUnits(aop1VaultStats[3], 18)) * monPriceInUsd : 0,
   } : null;
 
   const aop2Stats = aop2VaultStats ? {
@@ -72,10 +85,14 @@ export default function Home() {
     monBalance: aop2VaultStats[3] ? formatUnits(aop2VaultStats[3], 18) : '0',
     usdtBalance: aop2VaultStats[4] ? formatUnits(aop2VaultStats[4], 6) : '0',
     userCount: aop2VaultStats[6] ? Number(aop2VaultStats[6]) : 0,
+    // Calculate MON value in USD
+    monValueInUsd: aop2VaultStats[3] ? parseFloat(formatUnits(aop2VaultStats[3], 18)) * monPriceInUsd : 0,
   } : null;
 
+  // Update the platform stats to include MON value
   const platformStats = {
-    totalAssets: parseFloat(aop1Stats?.totalAssets || '0') + parseFloat(aop2Stats?.totalAssets || '0'),
+    totalAssets: parseFloat(aop1Stats?.totalAssets || '0') + parseFloat(aop2Stats?.totalAssets || '0') +
+                 (aop1Stats?.monValueInUsd || 0) + (aop2Stats?.monValueInUsd || 0),
     totalUsers: (aop1Stats?.userCount || 0) + (aop2Stats?.userCount || 0),
   };
 
@@ -135,13 +152,13 @@ export default function Home() {
     // AoP1 Metrics (Medium Risk Vault)
     {
       title: 'AoP1: Medium Risk',
-      value: aop1Stats ? formatUsdValue(aop1Stats.totalAssets) : '$0',
+      value: aop1Stats ? formatUsdValue((parseFloat(aop1Stats.totalAssets) + aop1Stats.monValueInUsd).toString()) : '$0',
       description: 'Balanced risk-return profile',
       icon: ShieldCheckIcon,
       color: 'from-blue-600 to-indigo-600',
       details: [
         { label: 'USDT Balance', value: aop1Stats ? formatUsdValue(aop1Stats.usdtBalance) : '$0' },
-        { label: 'MON Balance', value: aop1Stats ? `${formatCryptoValue(aop1Stats.monBalance)} MON` : '0 MON' },
+        { label: 'MON Balance', value: aop1Stats ? `${formatCryptoValue(aop1Stats.monBalance)} MON (${formatUsdValue(aop1Stats.monValueInUsd.toString())})` : '0 MON' },
         { label: 'Total Shares', value: aop1Stats ? formatCryptoValue(aop1Stats.totalShares) : '0' },
         { label: 'Users', value: aop1Stats ? aop1Stats.userCount.toString() : '0' },
       ]
@@ -149,13 +166,13 @@ export default function Home() {
     // AoP2 Metrics (High Risk Vault)
     {
       title: 'AoP2: High Risk',
-      value: aop2Stats ? formatUsdValue(aop2Stats.totalAssets) : '$0',
+      value: aop2Stats ? formatUsdValue((parseFloat(aop2Stats.totalAssets) + aop2Stats.monValueInUsd).toString()) : '$0',
       description: 'Higher risk with potential for greater returns',
       icon: ChartBarIcon,
       color: 'from-purple-600 to-violet-600',
       details: [
         { label: 'USDT Balance', value: aop2Stats ? formatUsdValue(aop2Stats.usdtBalance) : '$0' },
-        { label: 'MON Balance', value: aop2Stats ? `${formatCryptoValue(aop2Stats.monBalance)} MON` : '0 MON' },
+        { label: 'MON Balance', value: aop2Stats ? `${formatCryptoValue(aop2Stats.monBalance)} MON (${formatUsdValue(aop2Stats.monValueInUsd.toString())})` : '0 MON' },
         { label: 'Total Shares', value: aop2Stats ? formatCryptoValue(aop2Stats.totalShares) : '0' },
         { label: 'Users', value: aop2Stats ? aop2Stats.userCount.toString() : '0' },
       ]
